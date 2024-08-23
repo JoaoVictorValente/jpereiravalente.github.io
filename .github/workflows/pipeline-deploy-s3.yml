@@ -12,7 +12,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'npm' # Mantenha se o arquivo de lock estiver presente
+          cache: 'npm'  # Mantenha se você estiver usando cache e o arquivo de lock estiver presente
       - name: Frontend Install
         run: |
           cd frontend
