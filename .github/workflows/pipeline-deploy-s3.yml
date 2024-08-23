@@ -7,20 +7,27 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
+
       - name: Frontend Install
         run: |
           cd frontend
           npm install
+        working-directory: frontend
+
       - name: Frontend Build
         run: |
           cd frontend
           npm run build
+        working-directory: frontend
+
       - name: Upload Frontend Build
         uses: actions/upload-artifact@v4
         with:
@@ -41,4 +48,5 @@ jobs:
         with:
           name: build
           path: frontend/.next/server/app
+
       - run: aws s3 cp frontend/.next/server/app s3://${{ env.BUCKET_S3 }} --recursive --acl public-read
